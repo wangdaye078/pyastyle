@@ -1,3 +1,11 @@
+new install:
+
+git clone --recurse-submodules https://github.com/wangdaye078/pyastyle.git
+
+uv build
+
+uv pip install dist/pyastyle-1.1.6-cp312-cp312-win_amd64.whl (or other name)
+
 Python module for astyle
 ========================
 
