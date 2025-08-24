@@ -3,7 +3,6 @@ import os
 import sys
 
 from setuptools import setup, Extension
-from setuptools.command.test import test as TestCommand
 
 import version
 
@@ -25,7 +24,7 @@ else:
     extra_compile_args = []
 
 if sys.platform == 'win32':
-    extra_compile_args.extend(['/EHsc'])
+    extra_compile_args.extend(['/EHsc', '/std:c++17'])
 
 
 module = Extension(
@@ -37,20 +36,6 @@ module = Extension(
     language='c++',
     extra_compile_args=extra_compile_args,
 )
-
-
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = []
-
-    def run_tests(self):
-        # import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
 
 
 setup(
@@ -73,19 +58,16 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: Implementation :: CPython",
     ],
 
     zip_safe=False,
     ext_modules=[module],
-    tests_require=['pytest'],
-    cmdclass={'test': PyTest},
 )
